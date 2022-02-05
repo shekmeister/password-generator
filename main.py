@@ -6,11 +6,11 @@ import simplejson as json
 class PassGen:
     def __init__(self, cwd) -> None:
         self.cwd = cwd
+        self.pass_file = f"{self.cwd}/passwords.json"
 
     def check_file(self):
-        pass_file = f"{self.cwd}/passwords.json"
-        if not os.path.exists(f"{self.cwd}/passwords.json"):
-            with open(pass_file, "w+") as file:
+        if not os.path.exists(self.pass_file):
+            with open(self.pass_file, "w+") as file:
                 data = {}
                 json.dumps(file.write(data))
 
@@ -20,4 +20,12 @@ class PassGen:
         password = "".join(random.choice(string.ascii_letters + string.digits + spl_chars, k=32))
         return kwd+password
     
+
+def main():
+    passgen = PassGen(
+        cwd = os.getcwd()
+    )
+    passgen.check_file()
     
+if __name__ == "__main__":
+    main()
