@@ -12,13 +12,15 @@ class PassGen:
         if not os.path.exists(self.pass_file):
             with open(self.pass_file, "w+") as file:
                 data = {}
-                json.dumps(file.write(data))
+                json.dump(data, file)
 
     def create_password(self):
         spl_chars = "!#$%&()*+,-./:;?@[]^_`~"
         kwd = str(input("Enter a keyword for the password > ")).lower()+"@"
         password = "".join(random.choice(string.ascii_letters + string.digits + spl_chars, k=32))
         return kwd+password
+
+    
     
 
 def main():
