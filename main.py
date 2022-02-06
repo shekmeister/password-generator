@@ -1,6 +1,7 @@
 import os, random, string
 import pyAesCrypt as crypt
 import simplejson as json
+from tabulate import tabulate
 
 
 class PassGen:
@@ -27,25 +28,54 @@ class PassGen:
             data[app] = password
             file.seek(0)
             json.dump(data, file)
+
+    def show_passwords(self):
+        with open(self.pass_file, "r+") as file:
+            data = json.load(file)
+            kvp = data.items()
+            print(tabulate(kvp, headers=["App", "Password"], showindex="always", tablefmt="rst"))
         
-    
+
 def main():
     passgen = PassGen(
         cwd=os.getcwd()
     )
-    app = str(input("Enter the app password is going to be used for > "))
     while True:
-        password = passgen.create_password()
-        print(f"Your password: {password}\nAre you satisfied with this password?")
-        ans = str(input("y/n? > ")).lower()
-        if ans == "y":
-            passgen.write_to_file(app, password)
-            print("Password has been saved.")
-            break
-        elif ans == "n":
-            continue
+        print("""
+\nChoose action:
+1 - Generate new password.
+2 - View passwords.
+""")
+        ans1 = str(input("> "))
+        if ans1 == "1":
+            app = str(input("\nEnter the app password is going to be used for > "))
+            while True:
+                password = passgen.create_password()
+                ans2 = str(input((f"\nYour password: {password}\nAre you satisfied with this password? y/n? > "))).lower()
+                if ans2 == "y":
+                    passgen.write_to_file(app, password)
+                    print("\nPassword has been saved.")
+                    break
+                elif ans2 == "n":
+                    continue
+                else:
+                    print("\nInvalid input.")
+                    break
+            
+        elif ans1 == "2":
+            passgen.show_passwords()
+            cont = str(input("\nDo you wish to continue? > ")).lower()
+            if cont == "y":
+                continue
+            elif cont == "n":
+                print("\nOperation complete.\nTerminating Program...")
+                break
+            else:
+                print("\nInvalid input.\nTerminating program...")
+                break
+        
         else:
-            print("Invalid input")
+            print("Invalid input.")
             continue
     
 if __name__ == "__main__":
