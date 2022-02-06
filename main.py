@@ -35,6 +35,13 @@ class PassGen:
             kvp = data.items()
             print(tabulate(kvp, headers=["App", "Password"], showindex="always", tablefmt="rst"))
         
+    def delete_password(self, app_name):
+        with open(self.pass_file, "r+") as file:
+            data = json.load(file)
+            data.pop(app_name)
+        
+        with open(self.pass_file, "w+") as file:
+            json.dump(data, file)
 
 def main():
     passgen = PassGen(
@@ -45,6 +52,7 @@ def main():
 \nChoose action:
 1 - Generate new password.
 2 - View passwords.
+3 - Delete password.
 """)
         ans1 = str(input("> "))
         if ans1 == "1":
@@ -74,6 +82,19 @@ def main():
                 print("\nInvalid input.\nTerminating program...")
                 break
         
+        elif ans1 == "3":
+            passgen.show_passwords()
+            app_name = str(input("Enter the app name associated with the password you wish to delete > "))
+            passgen.delete_password(app_name=app_name)
+            cont = str(input("\nDo you wish to continue? (y/n) > ")).lower()
+            if cont == "y":
+                continue
+            elif cont == "n":
+                print("\nOperation complete.\nTerminating Program...")
+                break
+            else:
+                print("\nInvalid input.\nTerminating program...")
+                break
         else:
             print("Invalid input.")
             continue
