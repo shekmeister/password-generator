@@ -51,7 +51,7 @@ def main():
             app = str(input("\nEnter the app password is going to be used for > "))
             while True:
                 password = passgen.create_password()
-                ans2 = str(input((f"\nYour password: {password}\nAre you satisfied with this password? y/n? > "))).lower()
+                ans2 = str(input((f"\nYour password: {password}\nAre you satisfied with this password? (y/n) > "))).lower()
                 if ans2 == "y":
                     passgen.write_to_file(app, password)
                     print("\nPassword has been saved.")
@@ -64,7 +64,7 @@ def main():
             
         elif ans1 == "2":
             passgen.show_passwords()
-            cont = str(input("\nDo you wish to continue? > ")).lower()
+            cont = str(input("\nDo you wish to continue? (y/n) > ")).lower()
             if cont == "y":
                 continue
             elif cont == "n":
