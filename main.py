@@ -1,5 +1,4 @@
 import os, random, string
-import pyAesCrypt as crypt
 import simplejson as json
 from tabulate import tabulate
 
