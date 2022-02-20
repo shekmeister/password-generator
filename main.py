@@ -52,6 +52,7 @@ def main():
 1 - Generate new password.
 2 - View passwords.
 3 - Delete password.
+4 - Exit.
 """)
         ans1 = str(input("> "))
         if ans1 == "1":
@@ -94,6 +95,10 @@ def main():
             else:
                 print("\nInvalid input.\nTerminating program...")
                 break
+
+        elif ans1 == "3":
+            print("Terminating process...")
+            break
         else:
             print("Invalid input.")
             continue
