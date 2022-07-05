@@ -16,9 +16,9 @@ class PassGen:
                 json.dump(data, file)
 
     def create_password(self):
-        spl_chars = "!#$%&()*+,-./:;?@[]^_`~"
+        spl_chars = "!#$%&*+-./:;?@^_~"
         kwd = str(input("Enter a keyword for the password > ")).lower()+"@"
-        password = "".join(random.choices(string.ascii_letters + string.digits + spl_chars, k=32))
+        password = "".join(random.choices(string.ascii_letters + string.digits + spl_chars, k=16))
         return kwd+password
 
     def write_to_file(self, app, password):
@@ -104,4 +104,7 @@ def main():
             continue
     
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except KeyboardInterrupt:
+        print("KeyboardInterrupt: Terminating session.")
